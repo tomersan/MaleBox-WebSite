@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import NavBar from '../components/NavBar';
 import HomePageImg2 from '../img/slide 1.jpg';
@@ -12,10 +12,11 @@ import "slick-carousel/slick/slick-theme.css";
 import ButtonMaleBox from '../components/ButtonMaleBox';
 import { Link } from 'react-router-dom';
 import Footer from '../components/Footer';
-
+import FormField from '../components/formFeild';
 
 const Home = () => {
-
+  
+    //setting for image slider 
     var settings = {
         dots: true,
         infinite: true,
@@ -25,24 +26,79 @@ const Home = () => {
 
     };
 
+    const [HomePage, setHomePage] = useState(null);
+
+    const LoadHomePage = async () => {
+        try {
+            let res = await fetch('/api/homepage', { method: 'GET' })
+            let data = await res.json()
+            setHomePage(data)
+            console.log(data)
+
+        }
+        catch (err) { console.log(err) }
+    }
+
+    // fetch all page from db
+    useEffect(() => {
+
+        LoadHomePage()
+
+    }, [])
+
+    const [image, setImage] = useState(null);
+
+    const uploadImage = (input) => { // העלאת תמונה והמרה לבייס 64
+    
+        if (input.files && input.files[0]) {
+            let reader = new FileReader();
+    
+            reader.onload = function (e) {
+                setImage(e.target.result)
+                console.log(e.target.result);
+            }
+            
+    
+            reader.readAsDataURL(input.files[0]); //convert to base64 string
+        }
+    }
+
+    if(HomePage !== null)
+    {
     return (
         <>
             <NavBar></NavBar>
             <div className="header_home_page">
+                 {/* <FormField className="Input-image"  value={image} type="text" name="תמונה (חובה)" action={uploadImage} targetImg={image} type="file" /> */}
+                {/* <button className='ttt' onClick={(e) => console.log(image)}>showimage</button> */}
                 <Container >
                     <Row className="top_home_page">
                         <Slider className="carousel" {...settings}>
-                            <img className="HomePageImage" src={HomePageImg2} alt="" />
-                            <img className="HomePageImage" src={HomePageImg3} alt="" />
-                            <img className="HomePageImage" src={HomePageImg4} alt="" />
-
+                            {
+                                HomePage[0].MainImage ? 
+                                <img className="HomePageImage" src={HomePage[0].MainImage} alt="" />
+                                :
+                                ''
+                            }
+                            {
+                                HomePage[0].MainImage1 ? 
+                                <img className="HomePageImage" src={HomePage[0].MainImage1} alt="" />
+                                :
+                                ''
+                            }
+                            {
+                                HomePage[0].MainImage2 ? 
+                                <img className="HomePageImage" src={HomePage[0].MainImage2} alt="" />
+                                :
+                                ''
+                            }
                         </Slider>
                         {/* <div className="onImage"> */}
                         {/* <img src={LogoMaleBox} alt="" /> */}
                         <div className="tracking-in-contract-bck">
                             <h1>male box</h1>
                             <div className="btn-top-hp">
-                            <ButtonMaleBox  link="/store/הכל" text="&lt; 	&nbsp;	&nbsp;Let's Go"></ButtonMaleBox>
+                            <ButtonMaleBox  link="/store/הכל" text={HomePage[0].ButtonText}></ButtonMaleBox>
                             </div>
                         </div>
 
@@ -56,9 +112,9 @@ const Home = () => {
                         <Col md="6">
                             <div className="category">
                                 <Link to="/gallery">
-                                    <img className="categoryImage" src={TailoredIMG} alt="" />
+                                    <img className="categoryImage" loading='lazy' src={HomePage[0].Category_Image1} alt="" />
                                     <div className="btn-category">
-                                        <ButtonMaleBox link='/gallery' text='&lt; 	&nbsp;	&nbsp;Tailored'></ButtonMaleBox>
+                                        <ButtonMaleBox link='/gallery' text={HomePage[0].Category_Button2}></ButtonMaleBox>
                                     </div>
                                 </Link>
                             </div>
@@ -66,9 +122,9 @@ const Home = () => {
                         <Col md="6">
                             <div className="category">
                                 <Link to="/store">
-                                    <img className="categoryImage" src={CasualIMG} alt="" />
+                                    <img className="categoryImage" loading='lazy' src={HomePage[0].Category_Image2} alt="" />
                                     <div className="btn-category">
-                                        <ButtonMaleBox link='/store' text='&lt; 	&nbsp;	&nbsp;Casual'></ButtonMaleBox>
+                                        <ButtonMaleBox link='/store' text={HomePage[0].Category_Button}></ButtonMaleBox>
                                     </div>
                                 </Link>
                             </div>
@@ -104,5 +160,15 @@ const Home = () => {
 
         </>
     )
+    }
+    else
+    {
+        return(<center>
+        <div className="loading-item">
+        <div class="loader"></div>
+        <h1 className="logoMaleBox2">male box</h1>
+        </div>
+     </center>)
+    }
 }
 export default Home;

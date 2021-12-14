@@ -91,7 +91,7 @@ const ItemManagement = (props) => {
             return (
                 <>
                     <NavBarSys></NavBarSys>
-                    <div className="all-items">
+                    <div className="all-items-admin">
                         <center>
                                 <div className="top-pageIM">
                                     <div className="tools">
@@ -105,7 +105,7 @@ const ItemManagement = (props) => {
                                     {items.map(item => {
                                         return <>
                                             <Col lg="3" md="4" sm="6">
-                                                <ProductAdmin key={item.Item_Id} name={item.Title} image={item.Item_Image} price={item.Price} id={item.Item_Id} isactive={item.IsActive}> </ProductAdmin>
+                                                <ProductAdmin key={item.Item_Id} name={item.Title} image={item.Item_Image} price={item.Price} id={item.Item_Id} isactive={item.IsActive} item={item}>  </ProductAdmin>
                                             </Col>
                                         </>
                                     }

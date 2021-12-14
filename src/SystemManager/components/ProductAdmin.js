@@ -18,7 +18,6 @@ const ProductAdmin = (props) => {
 
     const history = useHistory()
 
-    console.log(props.id)
 
     const Activeitem = async (item) => {
 
@@ -75,10 +74,14 @@ const ProductAdmin = (props) => {
                             <div className="activeIcon" onClick={(e) => Activeitem(e)}>{activeIcon}
                                 <span class="tooltiptextactive">הפעלה</span>
                             </div>
-                            <div className="editIcon" onClick={(e) => history.push({ pathname: '/edituser', state: { detail: true } })}>{editIcon}
+                            <div className="editIcon" onClick={(e) => history.push({ pathname: '/edititem', state: { detail: true, item: props.item} })}>{editIcon}
                                 <span class="tooltiptextedit">עריכה</span>
                             </div>
+
                         </div>
+                        <div className="editIcon" onClick={(e) => window.open('/products/'+props.id, "_blank")}>
+                                <center><button class="btn-view-item">לצפייה בעמוד המוצר</button></center>
+                         </div>
                     </div>
                     <div className="item-footer">
                         <div className="item-name">

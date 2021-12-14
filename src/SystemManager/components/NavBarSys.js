@@ -30,11 +30,10 @@ const NavBarSys = (props) => {
         var token = randomToken(16) + hour + ms; // example output → '3ZGErMDCwxTOZYFp'
         setLoader(true)
         setLogoutConfirm(false)
-
         try {
             let user = {
-                "Email": props.admin[0].email,
-                "token": props.admin[0].token
+                "Email": admin[0].email,
+                "token": admin[0].token
             }
 
             let res = await fetch('/api/users/logout', {
@@ -83,10 +82,10 @@ const NavBarSys = (props) => {
                 </div>
                 <div className="nav-dash-contect">
                     
-                    <LinkMenu name="ניהול הזמנות" link='/admin'></LinkMenu>
+                    <LinkMenu name="ניהול הזמנות" link='/ordermanagement'></LinkMenu>
                     <LinkMenu name="ניהול מוצרים" link='/itemmanagement'></LinkMenu>
                     <LinkMenu name="ניהול משתמשים" link='/usermanagement'></LinkMenu>
-                    <LinkMenu name="ניהול קטגוריות" link='/admin'></LinkMenu>
+                    <LinkMenu name="ניהול קטגוריות" link='/categorymanagement'></LinkMenu>
                     <LinkMenu name="גלריה"></LinkMenu>
                 </div>
             </div>

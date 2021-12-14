@@ -6,6 +6,8 @@ import { useHistory } from 'react-router-dom';
 
 const Profile = (props) => {
 
+
+    //vars
     const history = useHistory()
     const [userName, setUserName] = useState('');
     const [firstname, setFirstName] = useState('');
@@ -14,7 +16,6 @@ const Profile = (props) => {
     const [phone, setPhone] = useState('');
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
-
     const [User_Image, setUser_Image] = useState('');
     const [Gender, setGender] = useState('');
     const [User_Type, setUser_Type] = useState('');
@@ -23,14 +24,12 @@ const Profile = (props) => {
     const [City, setCity] = useState('');
     const [House_Num, setHouse_Num] = useState('');
     const [Postal_Code, setPostal_Code] = useState('');
-
-
     const [UpdateConfirm, setUpdateConfirm] = useState(false)
     const [Loader, setLoader] = useState(false)
-
     const [LogoutConfirm, setLogoutConfirm] = useState(false)
 
 
+    //function logout and remove user for localstorage and change token from db
     const LogOut = async () => {
 
         const d = new Date();
@@ -68,9 +67,8 @@ const Profile = (props) => {
         catch (err) { console.log(err) }
     }
 
-
+    //If the user wants to update details we will change the situation to true or false
     const [editUser, setEditUser] = useState(false);
-
     const Edit = () => {
         if (editUser === false) {
             setEditUser(true)
@@ -81,6 +79,7 @@ const Profile = (props) => {
         }
     }
 
+    // update user on db
     const UpdateUser = async () => {
         setLoader(true)
         setUpdateConfirm(false)
@@ -137,7 +136,6 @@ const Profile = (props) => {
                     "Phone": phone
                 }]
                 localStorage.setItem('user', JSON.stringify(user))
-                history.push(window.location.pathname)
                 return
             }
             if (data.rowsAffected[0] < 0) {
@@ -152,11 +150,10 @@ const Profile = (props) => {
     }
 
 
+    // get user from local storage and save in vars
     useEffect(() => {
         if (localStorage.getItem('token')) {
-
             let user = JSON.parse(localStorage.getItem('user'))
-
             if (user) {
                 setUserName(user[0].User_Name)
                 setFirstName(user[0].First_Name)
@@ -188,7 +185,7 @@ const Profile = (props) => {
                             <center><h1 className="profile-name">{firstname[0]}{lastname[0]}</h1></center>
                         </div>
                     </div>
-                    
+
                     <div className="content-profile">
                         <div className="details">
                             <p style={{ fontWeight: "bold" }}>:שם פרטי</p>
@@ -217,11 +214,11 @@ const Profile = (props) => {
 
                     </div>
 
-                    <hr/>
+                    <hr />
                     <h2 className={UpdateConfirm ? 'confirmreg active' : 'confirmreg'}>! העדכון בוצע בהצלחה</h2>
 
                     <div className="footer-profile">
-                        {editUser === false ? <p style={{ fontWeight: "bold", cursor: "pointer" }} onClick={Edit}>עריכת פרטים</p> : <p style={{ fontWeight: "bold", cursor: "pointer" }} onClick={UpdateUser} className="logout">שמור</p>}
+                        {editUser === false ? <p style={{ fontWeight: "bold", cursor: "pointer" }} onClick={Edit}>עריכת פרטים</p> : <p style={{ fontWeight: "bold", cursor: "pointer" }} onClick={UpdateUser} >שמור</p>}
 
                     </div>
                     <div className="footer-profile">

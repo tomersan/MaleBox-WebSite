@@ -30,11 +30,11 @@ const ProductPage = () => {
 
   const OpenCart = (event) => {
     if (!CartModal) {
-        setCartModal(true);
+      setCartModal(true);
     }
     else
-        setCartModal(false);
-}
+      setCartModal(false);
+  }
 
 
   // quantity between 1-10 
@@ -57,17 +57,6 @@ const ProductPage = () => {
 
   let thisProduct = items;
 
-  // find current item in array items from db
-  // if (items !== null) {
-  //   for (let i = 0; i < items.length; i++) {
-  //     if (Number(items[i].Item_Id) === Number(id)) {
-  //       thisProduct = items[i]
-  //       break
-  //     }
-  //   }
-  // }
-
-
   useEffect(() => {
 
     LoadItems().then(data => {
@@ -75,6 +64,33 @@ const ProductPage = () => {
     })
 
   }, [])
+
+  const [ExistWishlist, setExistWishlist] = useState('');
+  const [itemfWL, setItemfWL] = useState('');
+
+  useEffect(() => {
+
+    setItemfWL(JSON.parse(localStorage.getItem("wishlist")))
+
+    if (itemfWL) {
+        for (let i = 0; i < itemfWL.length; i++) {
+        
+          if(itemfWL[i].id === id)
+          {
+
+            setExistWishlist(true)
+          }
+        
+        }  
+    }
+    else
+    {
+      setExistWishlist(false)
+    }
+
+
+  }, [ExistWishlist])
+
 
 
   // set icons 
@@ -136,7 +152,16 @@ const ProductPage = () => {
     if (CheckField()) {
       //if checkField return true need add item in the cart
       let NameOfItem = thisProduct['Title']
-      let PriceOfItem = thisProduct['Price'] * quantity
+      let PriceOfItem =''
+      if(thisProduct['Sell_Price'] !== 0)
+      {
+        PriceOfItem= thisProduct['Sell_Price'] * quantity
+  
+      }
+      else
+      {
+        PriceOfItem= thisProduct['Price'] * quantity
+      }
       let ItemDes = thisProduct['Description']
       let ItemImage = thisProduct['Item_Image']
       let item = [{ NameOfItem, PriceOfItem, id, currentColor, currentSize, ItemDes, ItemImage, quantity }]
@@ -149,7 +174,6 @@ const ProductPage = () => {
             itemFromLocalStorage[i].quantity += quantity
             itemFromLocalStorage[i].PriceOfItem = thisProduct['Price'] * itemFromLocalStorage[i].quantity
             localStorage.setItem('cart', JSON.stringify(itemFromLocalStorage))
-            history.push(window.location.pathname)
             return
           }
 
@@ -157,14 +181,12 @@ const ProductPage = () => {
         itemFromLocalStorage.push(null)
         itemFromLocalStorage[itemFromLocalStorage.length - 1] = item[0]
         localStorage.setItem('cart', JSON.stringify(itemFromLocalStorage))
-        history.push(window.location.pathname)
         OpenCart()
       }
 
       else {
 
         localStorage.setItem('cart', JSON.stringify(item))
-        history.push(window.location.pathname)
         OpenCart()
 
       }
@@ -175,8 +197,28 @@ const ProductPage = () => {
   }
   //add to wishlist func
   const addToWishList = () => {
+    if(ExistWishlist === false)
+    {
+      setExistWishlist(true)
+
+
+    }
+    else if(ExistWishlist === true)
+    {
+      setExistWishlist(false)
+
+    }
     let NameOfItem = thisProduct['Title']
-    let PriceOfItem = thisProduct['Price']
+    let PriceOfItem =''
+    if(thisProduct['Sell_Price'] !== 0)
+    {
+      PriceOfItem= thisProduct['Sell_Price']
+
+    }
+    else
+    {
+      PriceOfItem= thisProduct['Price']
+    }
     let ItemDes = thisProduct['Description']
     let ItemImage = thisProduct['Item_Image']
     let item = [{ NameOfItem, PriceOfItem, id, ItemDes, ItemImage, quantity }]
@@ -184,13 +226,12 @@ const ProductPage = () => {
     if (localStorage.getItem('wishlist')) {
 
       let itemFromLocalStorage = JSON.parse(localStorage.getItem('wishlist'))
-      let ok = true 
+      let ok = true
 
       for (let i = 0; i < itemFromLocalStorage.length; i++) {
-        if (itemFromLocalStorage[i].id === id ) {
-          itemFromLocalStorage =  itemFromLocalStorage.filter(i => i.id !== id)
+        if (itemFromLocalStorage[i].id === id) {
+          itemFromLocalStorage = itemFromLocalStorage.filter(i => i.id !== id)
           localStorage.setItem('wishlist', JSON.stringify(itemFromLocalStorage))
-          history.push(window.location.pathname)
 
           return
         }
@@ -198,13 +239,11 @@ const ProductPage = () => {
       itemFromLocalStorage.push(null)
       itemFromLocalStorage[itemFromLocalStorage.length - 1] = item[0]
       localStorage.setItem('wishlist', JSON.stringify(itemFromLocalStorage))
-      history.push(window.location.pathname)
 
     }
     else {
 
       localStorage.setItem('wishlist', JSON.stringify(item))
-      history.push(window.location.pathname)
     }
   }
 
@@ -237,9 +276,43 @@ const ProductPage = () => {
     else {
       if (thisProduct.Color != null)
         thisProductColor = thisProduct.Color.split(',')
-      if (thisProduct.size != null)
+      if (thisProduct.size != null) {
+        let sortSize = []
         thisProductSize = thisProduct.size.split(',')
+        let res;
+        res = thisProductSize.find(element => element === "XXS")
+        if (res !== undefined) {
+          sortSize.push("XXS")
+        }
+        res = thisProductSize.find(element => element === "XS")
+        if (res !== undefined) {
+          sortSize.push("XS")
+        }
+        res = thisProductSize.find(element => element === "S")
+        if (res !== undefined) {
+          sortSize.push("S")
+        }
+        res = thisProductSize.find(element => element === "M")
+        if (res !== undefined) {
+          sortSize.push("M")
+        }
+        res = thisProductSize.find(element => element === "L")
+        if (res !== undefined) {
+          sortSize.push("L")
+        }
+        res = thisProductSize.find(element => element === "XL")
+        if (res !== undefined) {
+          sortSize.push("XL")
+        }
+        res = thisProductSize.find(element => element === "XXL")
+        if (res !== undefined) {
+          sortSize.push("XXL")
+        }
+        thisProductSize = sortSize
+      }
+
     }
+
 
     // array images for gallery images in pruduct page
     const images = () => {
@@ -251,13 +324,17 @@ const ProductPage = () => {
             thumbnail: CurrentItemImage.Item_Image
           },
           {
-            original: CurrentItemImage.Item_Image,
-            thumbnail: CurrentItemImage.Item_Image,
+            original: CurrentItemImage.Item_Image1,
+            thumbnail: CurrentItemImage.Item_Image1
           },
           {
-            original: CurrentItemImage.Item_Image,
-            thumbnail: CurrentItemImage.Item_Image,
+            original: CurrentItemImage.Item_Image2,
+            thumbnail: CurrentItemImage.Item_Image2
           },
+          {
+            original: CurrentItemImage.Item_Image3,
+            thumbnail: CurrentItemImage.Item_Image3
+          }
         ];
         return images
       }
@@ -275,14 +352,16 @@ const ProductPage = () => {
             <Row>
               <Col md='6'>
                 <div className="image-product">
-                  <ImageGallery items={images()} additionalClass="galleryProduct" />
+                  <ImageGallery lazyLoad items={images()} additionalClass="galleryProduct" />
                 </div>
               </Col>
               <Col md='6'>
                 <div className="about-product">
                   <div className="header-about-product">
                     <h3>{thisProduct.Title}</h3>
-                    <h5>{thisProduct.Price + "  ₪"}</h5>
+                    {
+                      thisProduct.Sell_Price !== 0 ?<div className='item-price1'><h5 className='before-sale'>{thisProduct.Price + "  ₪"}</h5><h5 className='sale-price'>{thisProduct.Sell_Price + "  ₪"}</h5></div> :<h5>{thisProduct.Price + "  ₪"}</h5>
+                    }
                   </div>
                   <hr />
                   <div className="body-about-product">
@@ -320,7 +399,7 @@ const ProductPage = () => {
                   </div>
                   <div className="footer-about-product">
                     <Button className="btn-male-box" onClick={addToCart}>הוספה לסל</Button>
-                    <Button className="btn-male-box" onClick={addToWishList}>WishList &nbsp;&nbsp;&nbsp;{Heart}</Button>
+                    <Button className="btn-male-box" onClick={addToWishList}>{ExistWishlist === true ? " WishlList - הסר מ" : "WishList"}&nbsp;&nbsp;&nbsp;{Heart}</Button>
                   </div>
                 </div>
               </Col>

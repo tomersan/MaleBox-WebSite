@@ -1,6 +1,7 @@
 import FormFeild from '../../components/formFeild';
 import React, { useState, useEffect  ,useRef} from 'react';
 import LoginAdmin from '../components/LoginAdmin';
+import { useHistory } from 'react-router-dom';
 
 
 const AddUser = (props) => {
@@ -8,6 +9,7 @@ const AddUser = (props) => {
 
     const ifadmin = useRef([])
     const ifactive = useRef([])
+    const history = useHistory()
 
     useEffect(() => {
 
@@ -95,6 +97,9 @@ const AddUser = (props) => {
                 setLoader(false)
                 return alert('משתמש כבר קיים במערכת')
             }
+            alert("! מוצר נוסף בהצלחה")
+            history.push("/itemmanagement")
+    
     
 
         }

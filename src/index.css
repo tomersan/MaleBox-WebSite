@@ -14,13 +14,13 @@ body {
 }
 
 .bg-BgLogo {
-  background-color: rgb(226, 226, 226);
+  background-color: rgb(133, 133, 133);
   text-align: right;
   overflow: hidden;
 }
 
 .nav_item {
-  color: black;
+  color: rgb(0, 0, 0);
   padding: 8px;
   text-decoration: none;
   font-family: 'Heebo', sans-serif;
@@ -32,7 +32,7 @@ body {
 
 .nav_item:hover {
   transition: 0.5s ease;
-  color: rgb(156, 156, 156);
+  color: rgb(255, 255, 255);
 }
 
 .logoMaleBox {
@@ -43,7 +43,15 @@ body {
   margin-top: 2px;
   font-family: 'Courier Prime', monospace;
   text-decoration: none;
-  color: black;
+  color: rgb(236, 236, 236);
+  animation: chanhecolorlogo 20s infinite;
+}
+
+@keyframes chanhecolorlogo {
+  0%{color: black;}
+  10% {color: black;}
+  60% {color: white;}
+  100%{color: black;}
 }
 .logoMaleBox3 {
   top: 25px;
@@ -268,7 +276,11 @@ body {
   animation: spin 2s linear infinite;
   margin-bottom: 30px;
 }
-
+.loading-item
+{
+  margin-top: 15%;
+  margin-bottom: 100vh;
+}
 
 .center {
   display: flex;
@@ -284,7 +296,17 @@ body {
   margin-top: 20vh;
 }
 
+.Order-C
+{
+  background-color: white;
+  width: auto;
+  height: auto;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
 
+}
 
 /* Safari */
 @-webkit-keyframes spin {
@@ -410,7 +432,7 @@ body {
 }
 
 .footer {
-  background-color: rgb(226, 226, 226);
+  background-color: rgb(133, 133, 133);
   height: auto;
   width: 100%;
 }
@@ -630,7 +652,7 @@ body {
 }
 
 .item-header {
-  border: 8px solid silver;
+  border: 8px solid rgb(133, 133, 133);
   text-align: left;
   padding: 2%;
 }
@@ -649,6 +671,20 @@ body {
   font-weight: bold;
   text-decoration: none;
   color: black;
+}
+
+.item-price
+{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+.item-price1
+{
+  display: flex;
+  text-align: right;
+  justify-content: right;
 }
 
 .galleryProduct .image-gallery-svg {
@@ -700,10 +736,13 @@ body {
 
 .size {
   margin: 4px;
-  border: 3px solid gray;
   width: 40px;
+  border: none;
   height: 40px;
   text-align: center;
+  background-color: rgb(54, 54, 54);
+  color: rgb(255, 255, 255);
+  border-radius: 4px;
 }
 
 .colorButton.active {
@@ -733,7 +772,7 @@ body {
 }
 
 .numOfItemCart {
-  background-color: gray;
+  background-color: rgb(252, 252, 252);
   width: 15px;
   height: 15px;
   border-radius: 50%;
@@ -741,7 +780,9 @@ body {
   font-size: x-small;
   position: absolute;
   cursor: pointer;
-  color: white;
+  color: black;
+  transform: translateY(-9px);
+  margin-left: 5px;
 }
 
 .form-regiters {
@@ -762,6 +803,7 @@ body {
 .feild {
   text-align: right;
   margin-bottom: 10px;
+  width: 300px;
 }
 
 .feild1 {
@@ -824,7 +866,7 @@ body {
 .login.active {
   display: block;
   z-index: 2000;
-  background-color: gray;
+  background-color: whitesmoke;
   position: fixed;
   margin-top: 600px;
   height: 400px;
@@ -832,6 +874,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  border: 1px solid grey;
 }
 
 .content-login {
@@ -886,7 +929,7 @@ body {
 
 .profile.active {
   display: block;
-  background-color: rgb(255, 255, 255);
+  background-color: whitesmoke;
   width: 100vw;
   height: 100vh;
   justify-content: center;
@@ -1266,7 +1309,12 @@ button[disabled]{
 {
   margin-bottom: 150px;
 }
-
+.TotalAllPrice
+{
+  font-weight: bold;
+  text-decoration: underline;
+  margin-left: 20px;
+}
 .ProfileUser
 {
   display: flex;
@@ -1276,6 +1324,7 @@ button[disabled]{
   position: fixed;
 
 }
+
 
 .profile-name
 {
@@ -1300,10 +1349,15 @@ button[disabled]{
   flex-direction: column;
   margin-left: 40px;
 }
-.all-items
+.all-items-admin
 {
   width: 80%;
 }
+.all-items
+{
+  min-height: 100vh;
+}
+
 .iconProduct
 {
   display: flex;
@@ -1361,6 +1415,90 @@ button[disabled]{
   display: flex;
   flex-direction: column;
   width: 178px;
+}
+
+.btn-view-item
+{
+  background-color: rgb(54, 54, 54);
+  border: none;
+  margin: 10px;
+  color: white;
+  padding: 2px;
+
+}
+.table-Order
+{
+  width: 80%;
+  text-align: center;
+}
+.search-by
+{
+  width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+
+}
+.search-by-input
+{
+  text-align: center;
+  margin: 10px;
+}
+
+.onlybutton
+{
+  display: flex;
+  margin-bottom: 30px;
+}
+.input-by
+{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.label1
+{
+  font-weight: bold;
+}
+
+.order-id
+{
+  background-color: rgb(143, 143, 143);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  text-align: center;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+
+}
+.ifpaid
+{
+  position: absolute;
+  top: 120px;
+  left: 50px;
+
+}
+
+.before-sale
+{
+  color: grey !important;
+  text-decoration: line-through !important;
+}
+.sale-price
+{
+  color: rgb(102, 0, 0) !important;
+}
+
+.ttt
+{
+  z-index: 200000;
+  color: red;
+  width: 100%;
 }
 @media screen and (max-width: 992px) {
   body {

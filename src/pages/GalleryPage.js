@@ -23,6 +23,12 @@ const GalleryPage = () => {
           original: GalleryImage3,
           thumbnail: GalleryImage3,
         },
+
+        
+        {
+          original: GalleryImage3,
+          thumbnail: GalleryImage3,
+        },
       ];
       
     return (

@@ -22,7 +22,8 @@ const EditUser = (props) => {
             setConfirm(confirm)
 
             UserToEdit = props.location.state.user
-
+            if(UserToEdit)
+            {
             console.log(UserToEdit)
             setUserName(UserToEdit.User_Name)
             setPassword(UserToEdit.Password)
@@ -39,7 +40,9 @@ const EditUser = (props) => {
             setPostal_Code(UserToEdit.Postal_Code)
             setPhone(UserToEdit.Phone)
             setUser(UserToEdit)
+            }
         }
+
 
     }, [])
 

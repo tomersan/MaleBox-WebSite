@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 
 import { FiSearch } from "react-icons/fi";
 
-
+//components for search bar in website
 const SearchInput = (props) => {
 
     const [searchValue, setsearchValue] = useState("");

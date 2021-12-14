@@ -21,6 +21,11 @@ const Order = (props) => {
     const [Phone, setPhone] = useState(null);
     const [User_id, setUser_id] = useState(null);
     const [Order_id, setOrderId] = useState(null);
+    const [Order_Note, setOrder_Note] = useState(null);
+    const [Contact_Name, setContact_Name] = useState(null);
+    const [Contact_Email, setContact_Email] = useState(null);
+    const [Contact_Phone, setContact_Phone] = useState(null);
+
     const [confirm, setConfirm] = useState(null);
 
     const [UserFromLs, setUserFromLs] = useState(null);
@@ -209,8 +214,14 @@ const Order = (props) => {
     };
 
 
+    if(!JSON.parse(localStorage.getItem('cart')))
+    {
+        return""
+    }
+
     //////////////////////////////////////////////////////////////////////
     /* if user not exist in local storage return modal login */
+    
     let IfUserInLs = JSON.parse(localStorage.getItem('user'))
     if (!IfUserInLs) {
         return (
@@ -277,6 +288,8 @@ const Order = (props) => {
                                                 <FormFeild className="feild1" value={Last_Name !== null ? Last_Name : '...בטעינה'} type="text" name={Last_Name !== null ? "שם משפחה" : ' ...בטעינה'} action={setLast_Name} err={ERRLast_Name} />
                                                 <FormFeild className="feild1" value={Email !== null ? Email : '...בטעינה'} type="text" name={Email !== null ? "Email" : ' ...בטעינה'} action={setEmail} err={ERREmail} />
                                                 <FormFeild className="feild1" value={Phone} type="text" name="טלפון" action={setPhone} err={ERRPhone} />
+                                                <FormFeild className="feild1" value={Order_Note} type="text" name="הערות להזמנה" action={setOrder_Note}  />
+
                                             </div>
                                         </Row>
                                     </Col>
@@ -292,6 +305,10 @@ const Order = (props) => {
                             <input value={First_Name} name="firstname"></input>
                             <input value={Last_Name} name="lastname"></input>
                             <input value={Order_id} name="ordernumber"></input>
+                            <input value={price} name="orderprice"></input>
+                            {
+                                itemFromLS.map(i => {return( <input value={i.NameOfItem} name="itemname"></input>)})
+                            }
                         </form>
                     </div>
                 </>

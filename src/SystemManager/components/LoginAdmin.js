@@ -127,6 +127,7 @@ const LoginAdmin = (props) => {
     return (
         <>
 
+            <div className="login-admin">
             <div className="center-login">
                 <h1>מערכת ניהול</h1>
                 <div className={'login active'}>
@@ -154,7 +155,7 @@ const LoginAdmin = (props) => {
                 </div>
                 
             </div>
-
+            </div>
 
         </>
     )

@@ -9,24 +9,21 @@ import jwt_decode from "jwt-decode";
 const Login = (props) => {
 
     const history = useHistory()
-
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
     const [erremail, setErremail] = useState(false)
     const [errpassword, setErrpassword] = useState(false)
-
     const [LoginConfirm, setLoginConfirm] = useState(false)
     const [faildLogin, setFaildLogin] = useState(false)
-
     const [Loader, setLoader] = useState(false)
-
     const [user, setUser] = useState(null);
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
 
 
 
+
+    //function to login user and create token on db
     const LoginUser = async () => {
         setLoader(true)
         setLoginConfirm(false)
@@ -56,12 +53,15 @@ const Login = (props) => {
             })
             let data = await res.json()
             if (data.recordsets[0][0] !== undefined) {
+                //check if user not active 
                 if (data.recordsets[0][0]["IsActive"] === false) {
                     alert("משתמש לא פעיל")
                     setLoader(false)
                     setFaildLogin(true)
                     return
                 }
+
+                //create user to local storage 
                 let Email = data.recordsets[0][0].Email
                 let User_Name = data.recordsets[0][0].User_Name
                 let First_Name = data.recordsets[0][0].First_Name
@@ -80,8 +80,10 @@ const Login = (props) => {
                     Email, User_Name, First_Name, Last_Name
                     , Phone, House_Num, City, Postal_Code, User_id, User_Image, User_Type, IsActive, Address
                 }]
+                //set in local storage
                 localStorage.setItem('user', JSON.stringify(userToLocalStorage))
                 localStorage.setItem('token', JSON.stringify(token))
+
                 setLoader(false)
                 setLoginConfirm(true)
                 props.func()
@@ -96,82 +98,7 @@ const Login = (props) => {
         catch (err) { console.log(err) }
     }
 
-
-    // const refreshToken = async () => {
-    //     try {
-    //         const res = await axios.post("/api/users/refresh", { token: user.refreshToken });
-    //         setUser({
-    //             ...user,
-    //             accessToken: res.data.accessToken,
-    //             refreshToken: res.data.refreshToken,
-    //         });
-    //         return res.data;
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // };
-
-    // const axiosJWT = axios.create()
-
-    // axiosJWT.interceptors.request.use(
-    //     async (config) => {
-    //         let currentDate = new Date();
-    //         const decodedToken = jwt_decode(user.accessToken);
-    //         if (decodedToken.exp * 1000 < currentDate.getTime()) {
-    //             const data = await refreshToken();
-    //             config.headers["authorization"] = "Bearer " + data.accessToken;
-    //         }
-    //         return config;
-    //     },
-    //     (error) => {
-    //         return Promise.reject(error);
-    //     }
-    // );
-
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     try {
-
-    //         let user = {
-    //             "Email": email,
-    //             "Password": password
-    //         }
-
-    //         let res = await fetch('/api/users/login', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify(user)
-
-    //         })
-    //         let data = await res.json()
-    //         console.log(data.accessToken.toString())
-
-    //         user = {
-    //             "token": data.accessToken.toString() ,
-    //             "Email": email,
-    //             "Password": password
-
-    //         }
-    //         res = await fetch('/api/users/addtoken', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json'
-    //             },
-    //             body: JSON.stringify(user)
-
-    //         })
-    //         data = await res.json()
-    //         setUser(data);
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-
-    // };
-
-
-
+    // Check if the user has filled in all the details
     const CheckLogin = (e) => {
         e.preventDefault();
         setErrpassword(false)
@@ -196,7 +123,7 @@ const Login = (props) => {
 
     }
 
-
+    //Login to connect to the account
     if (!props.fromOrder) {
         return (
             <>
@@ -233,6 +160,7 @@ const Login = (props) => {
             </>
         )
     }
+     //Login to continue ordering
     else {
         return (
             <>

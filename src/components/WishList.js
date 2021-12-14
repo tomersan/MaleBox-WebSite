@@ -3,6 +3,9 @@ import ImageItemWishList from '../img/aviv.jpg';
 import {useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 
+
+
+//componenets for wishlist 
 const WishList = (props) => {
 
     let itemFromLS = JSON.parse(localStorage.getItem('wishlist'))
@@ -10,6 +13,7 @@ const WishList = (props) => {
     
     const history = useHistory()
 
+    //check if wishlist empty remove wishlist from local storage
     useEffect(() => {
 
         if(itemFromLS)

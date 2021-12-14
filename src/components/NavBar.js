@@ -18,6 +18,7 @@ import ProductPage from "../pages/ProductPage";
 const NavBar = (props) => {
 
 
+    //icons
     const searchIcon = (
         <FiSearch icon={FiSearch} />
     )
@@ -31,6 +32,7 @@ const NavBar = (props) => {
         <BsHeart icon={BsHeart} />
     )
 
+    // function to open cart modal 
     const [CartModal, setCartModal] = useState(false);
     const OpenCart = (event) => {
         if (!CartModal) {
@@ -40,6 +42,7 @@ const NavBar = (props) => {
             setCartModal(false);
     }
 
+    // function to open login modal 
     const [LoginModal, setLogintModal] = useState(false);
     const OpenLogin = (event) => {
         if (!LoginModal) {
@@ -48,7 +51,7 @@ const NavBar = (props) => {
         else
             setLogintModal(false);
     }
-
+    // function to open profile modal 
     const [ProfileModal, setProfileModal] = useState(false);
     const OpenProfile = (event) => {
         if (!ProfileModal) {
@@ -58,7 +61,7 @@ const NavBar = (props) => {
             setProfileModal(false);
     }
 
-
+    // function to open wishlist modal 
     const [WishListModal, setWishListModal] = useState(false);
     const OpenWishList = (event) => {
         if (!WishListModal) {
@@ -67,6 +70,7 @@ const NavBar = (props) => {
         else
             setWishListModal(false);
     }
+    // function to open search modal 
     const [Search, setSearch] = useState(false);
     const OpenSearchInput = (event) => {
         if (!Search) {
@@ -75,18 +79,19 @@ const NavBar = (props) => {
         else
             setSearch(false);
     }
+    
+    //vars to counter items from cart
     const [Counter, setCounter] = useState('');
     let ItemFromLs = JSON.parse(localStorage.getItem('cart'))
 
-
+    //vars to counter items from wishlist
     const [CounterWL, setCounterWL] = useState('');
     let ItemFromLsWL = JSON.parse(localStorage.getItem('wishlist'))
-
 
     const [userExist, setUserExist] = useState(false);
     const [userName, setUserName] = useState('');
 
-
+    //get user from local storage
     useEffect(() => {
         if (localStorage.getItem('user')) {
             let user = JSON.parse(localStorage.getItem('user'))
@@ -95,18 +100,18 @@ const NavBar = (props) => {
         }
     }, [])
 
+    // check if items count > 10 and if items count === 0 remove cart from loacal storage
     useEffect(() => {
-
+    
         if (ItemFromLs) {
             let c = 0
             for (let i = 0; i < ItemFromLs.length; i++) {
                 c += ItemFromLs[i].quantity
             }
-            if(c >10)
-            {
+            if (c > 10) {
                 setCounter(10)
                 return
-            }        
+            }
             setCounter(c)
             if (c === 0) {
                 localStorage.removeItem('cart')
@@ -114,6 +119,7 @@ const NavBar = (props) => {
             }
 
         }
+        // if wishlist is empty remove wishlist from local storage
         if (ItemFromLsWL) {
             setCounterWL(ItemFromLsWL.length)
             if (ItemFromLsWL.length === 0) {
@@ -121,13 +127,16 @@ const NavBar = (props) => {
             }
         }
 
-    }, [ItemFromLs , ItemFromLsWL])
+    }, [ItemFromLs, ItemFromLsWL])
     return (
         <>
+            {/* modals */}
             <WishList open={WishListModal} func={OpenWishList}></WishList>
             <MyCart open={CartModal} func={OpenCart}></MyCart>
             <Login open={LoginModal} func={OpenLogin}></Login>
             <Profile open={ProfileModal} func={OpenProfile}></Profile>
+
+        
             <Navbar className="navbar" collapseOnSelect expand="lg" bg="BgLogo" variant="light" dir="ltr" sticky='top'>
                 <Container>
                     <NavLink to="/"><h1 className="logoMaleBox">male box</h1></NavLink>
@@ -164,6 +173,7 @@ const NavBar = (props) => {
 
                 </Container>
             </Navbar>
+            {/* modal search */}
             <SearchInput open={Search}></SearchInput>
         </>
     )

@@ -126,7 +126,6 @@ const UserManagement = (props) => {
             })
             let data = await res.json()
             window.location.reload(true)
-
         }
         catch (err) { console.log(err) }
     }
@@ -174,6 +173,8 @@ const UserManagement = (props) => {
 
 
     }
+
+    
 
 
     if (localStorage.getItem('admin')) {

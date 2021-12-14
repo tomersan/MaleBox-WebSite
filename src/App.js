@@ -17,6 +17,11 @@ import EditUser from './SystemManager/pages/EditUser';
 import AddUser from './SystemManager/pages/AddUser';
 import ItemManagement from './SystemManager/pages/ItemMamagement';
 import AddItem from './SystemManager/pages/AddItem';
+import EditItem from './SystemManager/pages/EditItem';
+import CategoriesManagement from './SystemManager/pages/CategoriesManagement';
+import AddCategory from './SystemManager/pages/AddCategory';
+import OrderManagement from './SystemManager/pages/OrderManagement';
+import EditOrder from './SystemManager/pages/EditOrder';
 
 
 function App() {
@@ -94,6 +99,11 @@ function App() {
           <Route path="/adduser" component={AddUser} />
           <Route path="/itemmanagement" component={ItemManagement} />
           <Route path="/additem" component={AddItem} />
+          <Route path="/edititem" component={EditItem} />
+          <Route path="/categorymanagement" component={CategoriesManagement} />
+          <Route path="/addcategory" component={AddCategory} />
+          <Route path="/ordermanagement" component={OrderManagement} />
+          <Route path="/editorder" component={EditOrder} />
 
 
 
